@@ -1,8 +1,6 @@
 package com.pos.system.controller;
 
-import com.pos.system.dto.CustomerDto;
 import com.pos.system.dto.ItemDetailDto;
-import com.pos.system.service.CustomerService;
 import com.pos.system.service.ItemDetailService;
 import com.pos.system.util.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
