@@ -4,12 +4,15 @@ import com.pos.system.dto.CustomerDto;
 import com.pos.system.entity.Customer;
 import com.pos.system.repo.CustomerRepo;
 import com.pos.system.service.CustomerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 import jakarta.transaction.Transactional;
 
 @Service
@@ -25,11 +28,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void createCustomer(CustomerDto dto) {
-        UUID uuid = UUID.randomUUID();
-        long customerId = uuid.getMostSignificantBits();
         Customer customer = new Customer();
-        //customerId, dto.getEmail(), dto.getName(), dto.getContact(), dto.getSalary(),null
-        customer.setId(customerId);
         customer.setEmail(dto.getEmail());
         customer.setName(dto.getName());
         customer.setContact(dto.getContact());
@@ -39,18 +38,18 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void updateCustomer(CustomerDto dto, String customerId){
-        Optional<Customer> selectedCustomer = customerRepo.findUserByCustomerId(Long.parseLong(customerId));
+        Optional<Customer> selectedCustomer = customerRepo.findUserByCustomerId(customerId);
         if (selectedCustomer.isEmpty()) throw new RuntimeException();
         selectedCustomer.get().setEmail(dto.getEmail());
         selectedCustomer.get().setName(dto.getName());
         selectedCustomer.get().setContact(dto.getContact());
         selectedCustomer.get().setSalary(dto.getSalary());
-        selectedCustomer.get().setId(Long.parseLong(customerId));
+        selectedCustomer.get().setId(customerId);
         customerRepo.save(selectedCustomer.get());
     }
 
     @Override
-    public void deleteCustomer(long id) {
+    public void deleteCustomer(String id) {
         Optional<Customer> selectedCustomer = customerRepo.findUserByCustomerId(id);
         if (selectedCustomer.isEmpty()) throw new RuntimeException();
         customerRepo.delete(selectedCustomer.get());

@@ -1,6 +1,5 @@
 package com.pos.system.service.impl;
 
-import com.pos.system.dto.ItemDetailDto;
 import com.pos.system.dto.OrderDetailDto;
 import com.pos.system.entity.*;
 import com.pos.system.exception.ResourceNotFoundException;
@@ -8,6 +7,8 @@ import com.pos.system.repo.*;
 import com.pos.system.service.OrderDetailService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,8 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     private final CustomerRepo customerRepo;
     private final ItemDetailRepo itemDetailRepo;
     private final ProductRepo productRepo;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderDetailServiceImpl.class);
     @Override
     public void createOrder(OrderDetailDto dto) {
         //Set<ProductDetail> selectedProducts = dto.getProductDetail();
@@ -33,9 +36,10 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
         Customer customer = customerRepo.findById(dto.getCustomer())
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
+
         UUID uuid = UUID.randomUUID();
         long orderId = uuid.getMostSignificantBits();
-
+        LOGGER.trace(String.valueOf(orderId));
         OrderDetail orderDetail = OrderDetail.builder()
                 .orderId(String.valueOf(orderId))
                 .totalCost(dto.getTotalCost())

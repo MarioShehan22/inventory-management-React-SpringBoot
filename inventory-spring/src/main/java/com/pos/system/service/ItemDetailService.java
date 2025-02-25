@@ -2,6 +2,8 @@ package com.pos.system.service;
 
 import com.pos.system.dto.ItemDetailDto;
 import com.pos.system.dto.OrderDetailDto;
+import com.pos.system.dto.responsedto.ProductQuantityDTO;
+import com.pos.system.dto.responsedto.TotalAmountPerProduct;
 import com.pos.system.entity.ItemDetail;
 
 import java.sql.SQLException;
@@ -14,4 +16,6 @@ public interface ItemDetailService {
     void deleteItemDetail(long id) throws SQLException, ClassNotFoundException;
     //List<OrderDto> findCustomer(String email) throws SQLException, ClassNotFoundException;
     List<ItemDetailDto> findAllOrders() throws SQLException, ClassNotFoundException;
+    List<TotalAmountPerProduct> findAllTotalAmountPerProducts() throws SQLException,ClassNotFoundException;
+    List<ProductQuantityDTO> findAllTotalQTYPerProducts() throws SQLException,ClassNotFoundException;
 }

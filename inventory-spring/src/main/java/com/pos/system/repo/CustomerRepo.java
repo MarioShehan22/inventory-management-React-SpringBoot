@@ -15,5 +15,5 @@ public interface CustomerRepo extends JpaRepository<Customer, String> {
             List<Customer> findByNameContaining(String name);
 
     @Query(nativeQuery = true, value = "SELECT * FROM Customer c WHERE id=?")
-    public Optional<Customer> findUserByCustomerId(long id);
+    public Optional<Customer> findUserByCustomerId(String id);
 }

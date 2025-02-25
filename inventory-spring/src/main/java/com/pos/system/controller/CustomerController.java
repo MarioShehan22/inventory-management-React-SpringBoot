@@ -12,6 +12,7 @@ import java.sql.SQLException;
 
 @RestController
 @RequestMapping("/api/v1/customers")
+@CrossOrigin()
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -45,7 +46,7 @@ public class CustomerController {
         );
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<StandardResponse> deleteCustomer(@PathVariable long id) throws SQLException, ClassNotFoundException {
+    public ResponseEntity<StandardResponse> deleteCustomer(@PathVariable String id) throws SQLException, ClassNotFoundException {
         customerService.deleteCustomer(id);
         return new ResponseEntity<>(
                 new StandardResponse( 204 ," was Deleted!",id),

@@ -1,6 +1,7 @@
 package com.pos.system.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -21,10 +22,12 @@ public class ItemDetail {
 
     @ManyToOne
     @JoinColumn(name = "orderId", nullable = false)
+    @Valid
     private OrderDetail orderDetail;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "productId", nullable = false)
+    @Valid
     private Product product;
 
     @Column(nullable = false)

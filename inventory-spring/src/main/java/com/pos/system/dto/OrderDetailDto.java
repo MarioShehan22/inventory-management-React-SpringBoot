@@ -1,6 +1,5 @@
 package com.pos.system.dto;
 
-import com.pos.system.entity.ItemDetail;
 import lombok.*;
 
 import java.util.List;
