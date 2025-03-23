@@ -1,4 +1,4 @@
-package com.pos.system.dto;
+package com.pos.system.dto.requestDto;
 
 import lombok.*;
 

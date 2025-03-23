@@ -23,6 +23,6 @@ public class LoyaltyCard {
     private String email;
 
     @OneToOne
-    @JoinColumn(name = "customer", unique = true)
+    @JoinColumn(name = "customer_id", unique = true)
     private Customer customer;
 }

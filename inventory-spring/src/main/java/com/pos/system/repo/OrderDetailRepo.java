@@ -1,14 +1,27 @@
 package com.pos.system.repo;
 
+import com.pos.system.dto.responsedto.OrderDetailInterface;
 import com.pos.system.entity.OrderDetail;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
+@Repository
+@EnableJpaRepositories
 public interface OrderDetailRepo extends JpaRepository<OrderDetail, String> {
     @Query(nativeQuery = true, value = "SELECT * FROM order_detail o WHERE order_id=?")
     Optional<OrderDetail> findOrderById(String id);
+
+    @Query(value = "SELECT c.name as name,c.email as email,o.issued_date as issuedDate,o.total_cost as totalCost FROM order_detail o,customer c where c.id = o.customer_id",nativeQuery = true)
+    List<OrderDetailInterface> getAllOrderDetails(PageRequest of);
+
+    @Query(value = "SELECT COUNT(*) FROM order_detail o,customer c where c.id = o.customer_id",nativeQuery = true)
+    long countAllOrders();
 }
 //SELECT COUNT(order_id) FROM order_detail WHERE issued_date LIKE '%2024-12%';
 //SELECT SUM(total_cost) FROM order_detail WHERE issued_date LIKE '%2024-12%';

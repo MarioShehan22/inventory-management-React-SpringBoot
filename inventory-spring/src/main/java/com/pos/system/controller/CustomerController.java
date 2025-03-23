@@ -1,11 +1,12 @@
 package com.pos.system.controller;
 
-import com.pos.system.dto.CustomerDto;
+import com.pos.system.dto.requestDto.CustomerDto;
 import com.pos.system.service.CustomerService;
 import com.pos.system.util.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -38,10 +39,10 @@ public class CustomerController {
                 HttpStatus.CREATED
         );
     }
-    @GetMapping(path = "/list")
-    public ResponseEntity<StandardResponse> findAllCustomer() throws SQLException, ClassNotFoundException {
+    @GetMapping(path = "/list",params = {"searchText","page","size"})
+    public ResponseEntity<StandardResponse> findAllCustomer(@RequestParam String searchText, @RequestParam int page, @RequestParam int size) throws SQLException, ClassNotFoundException {
         return new ResponseEntity<>(
-                new StandardResponse(200, "Data List!", customerService.findAllCustomers()),
+                new StandardResponse(200, "Data List!", customerService.findAllCustomers(searchText, page, size)),
                 HttpStatus.OK
         );
     }

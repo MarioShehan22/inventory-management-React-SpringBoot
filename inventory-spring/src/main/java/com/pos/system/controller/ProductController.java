@@ -1,7 +1,8 @@
 package com.pos.system.controller;
-import com.pos.system.dto.ProductDto;
+import com.pos.system.dto.requestDto.ProductDto;
 import com.pos.system.service.ProductService;
 import com.pos.system.util.StandardResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

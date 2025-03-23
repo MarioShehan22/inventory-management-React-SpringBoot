@@ -25,7 +25,7 @@ public class ItemDetail {
     @Valid
     private OrderDetail orderDetail;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "productId", nullable = false)
     @Valid
     private Product product;

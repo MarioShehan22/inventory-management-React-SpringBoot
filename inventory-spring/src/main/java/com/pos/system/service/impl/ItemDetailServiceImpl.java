@@ -1,6 +1,6 @@
 package com.pos.system.service.impl;
 
-import com.pos.system.dto.ItemDetailDto;
+import com.pos.system.dto.requestDto.ItemDetailDto;
 import com.pos.system.dto.responsedto.ProductQuantityDTO;
 import com.pos.system.dto.responsedto.TotalAmountPerProduct;
 import com.pos.system.entity.ItemDetail;

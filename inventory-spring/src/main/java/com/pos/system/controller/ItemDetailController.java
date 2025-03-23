@@ -1,6 +1,6 @@
 package com.pos.system.controller;
 
-import com.pos.system.dto.ItemDetailDto;
+import com.pos.system.dto.requestDto.ItemDetailDto;
 import com.pos.system.service.ItemDetailService;
 import com.pos.system.util.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class ItemDetailController {
     public ResponseEntity<StandardResponse> createItemDetail(@RequestBody ItemDetailDto itemDetailDto) throws SQLException, ClassNotFoundException {
         itemDetailService.createItemDetail(itemDetailDto);
         return new ResponseEntity<>(
-                new StandardResponse(201, "Item was saved!", itemDetailDto.getItemDetailId()),
+                new StandardResponse(201, "Item was saved!", itemDetailDto.getCode()),
                 HttpStatus.CREATED
         );
     }

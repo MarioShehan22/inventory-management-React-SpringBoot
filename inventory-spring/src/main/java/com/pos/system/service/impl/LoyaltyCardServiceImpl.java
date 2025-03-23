@@ -1,8 +1,7 @@
 package com.pos.system.service.impl;
 
-import com.pos.system.dto.LoyaltyCardDto;
+import com.pos.system.dto.requestDto.LoyaltyCardDto;
 import com.pos.system.entity.LoyaltyCard;
-import com.pos.system.repo.CustomerRepo;
 import com.pos.system.repo.LoyaltyCardRepo;
 import com.pos.system.service.LoyaltyCardService;
 import jakarta.transaction.Transactional;

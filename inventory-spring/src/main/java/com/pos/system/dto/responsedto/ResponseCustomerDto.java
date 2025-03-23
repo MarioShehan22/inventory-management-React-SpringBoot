@@ -1,14 +1,13 @@
-package com.pos.system.dto;
+package com.pos.system.dto.responsedto;
 
 import lombok.*;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 @Builder
-public class CustomerDto {
+public class ResponseCustomerDto {
     private String id;
     private String email;
     private String name;

@@ -1,8 +1,9 @@
 package com.pos.system.controller;
 
-import com.pos.system.dto.OrderDetailDto;
+import com.pos.system.dto.requestDto.OrderDetailDto;
 import com.pos.system.service.OrderDetailService;
 import com.pos.system.util.StandardResponse;
+import jakarta.validation.constraints.Max;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +26,11 @@ public class OrderController {
         );
     }
 
-    @GetMapping(path = "/list")
-    public ResponseEntity<StandardResponse> findAllOrders() throws SQLException, ClassNotFoundException {
+    @GetMapping(path = "/list",params = {"page","size"})
+    public ResponseEntity<StandardResponse> findAllOrders(@RequestParam(value = "page") int page, @RequestParam(value = "size") @Max(50) int size) throws SQLException, ClassNotFoundException {
+
         return new ResponseEntity<>(
-                new StandardResponse(200, "Data List!", orderDetailService.findAllOrders()),
+                new StandardResponse(200, "Data List!", orderDetailService.findAllOrders(page,size)),
                 HttpStatus.OK
         );
     }

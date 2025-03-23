@@ -1,13 +1,14 @@
 package com.pos.system.service.impl;
 
-import com.pos.system.dto.ProductDto;
+import com.pos.system.dto.requestDto.ProductDto;
 import com.pos.system.entity.Product;
 import com.pos.system.repo.ProductRepo;
 import com.pos.system.service.ProductService;
+import com.pos.system.util.mapper.ProductMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,6 +19,7 @@ import java.util.UUID;
 public class ProductServiceImpl implements ProductService {
    private final ProductRepo productRepo;
 
+   private final ProductMapper productMapper;
     @Override
     public void saveProduct(ProductDto dto){
         Product product = new Product();
@@ -59,19 +61,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> findAllProducts(){
-        List<ProductDto> dtos = new ArrayList<>();
-        for (Product p : productRepo.findAll()) {
-            ProductDto productDto = new ProductDto();
-            productDto.setCode(p.getCode());
-            productDto.setName(p.getName());
-            productDto.setDescription(p.getDescription());
-            productDto.setDiscountAvailability(p.isDiscountAvailability());
-            productDto.setQtyOnHand(p.getQtyOnHand());
-            productDto.setSellingPrice(p.getSellingPrice());
-            productDto.setShowPrice(p.getShowPrice());
-            productDto.setBuyingPrice(p.getBuyingPrice());
-            dtos.add(productDto);
-        }
-        return dtos;
+        List<Product> dtos = productRepo.findAll();
+        return productMapper.toResponseProductDto(dtos);
     }
 }

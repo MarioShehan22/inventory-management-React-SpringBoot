@@ -1,6 +1,6 @@
 package com.pos.system.service;
 
-import com.pos.system.dto.ProductDto;
+import com.pos.system.dto.requestDto.ProductDto;
 import java.sql.SQLException;
 import java.util.List;
 

@@ -1,14 +1,11 @@
 package com.pos.system.service;
 
-import com.pos.system.dto.ItemDetailDto;
-import com.pos.system.dto.OrderDetailDto;
+import com.pos.system.dto.requestDto.ItemDetailDto;
 import com.pos.system.dto.responsedto.ProductQuantityDTO;
 import com.pos.system.dto.responsedto.TotalAmountPerProduct;
-import com.pos.system.entity.ItemDetail;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Set;
 
 public interface ItemDetailService {
     void createItemDetail(ItemDetailDto dto) throws SQLException, ClassNotFoundException;

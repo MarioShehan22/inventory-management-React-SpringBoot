@@ -1,30 +1,28 @@
 package com.pos.system.service.impl;
 
-import com.pos.system.dto.CustomerDto;
+import com.pos.system.dto.requestDto.CustomerDto;
+import com.pos.system.dto.responsedto.ResponseCustomerDto;
+import com.pos.system.dto.responsedto.paginated.PaginatedCustomerDto;
 import com.pos.system.entity.Customer;
 import com.pos.system.repo.CustomerRepo;
 import com.pos.system.service.CustomerService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.pos.system.util.mapper.CustomerMapper;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-
-import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepo customerRepo;
 
-    @Autowired
-    public CustomerServiceImpl(CustomerRepo customerRepo) {
-        this.customerRepo = customerRepo;
-    }
+    private final CustomerMapper customerMapper;
 
     @Override
     public void createCustomer(CustomerDto dto) {
@@ -56,19 +54,15 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<CustomerDto> findAllCustomers() {
-        List<Customer> allUsers = customerRepo.findAll();
-        List<CustomerDto> dtos = new ArrayList<>();
-        allUsers.forEach(e -> {
-            dtos.add(
-                    new CustomerDto(
-                    e.getId(),
-                    e.getName(),
-                    e.getEmail(),
-                    e.getContact(),
-                    e.getSalary()
-            ));
-        });
-        return dtos;
+    public PaginatedCustomerDto findAllCustomers(String searchText, int page, int size) {
+        searchText = "%" + searchText + "%";
+        List<Customer> allCustomers = customerRepo.searchCustomers(searchText, PageRequest.of(page, size));
+        long customerCount = customerRepo.countCustomers(searchText);
+        List<ResponseCustomerDto> dtos = customerMapper.toResponseCustomerDtoList(allCustomers);
+
+        return new PaginatedCustomerDto(
+                customerCount,
+                dtos
+        );
     }
 }

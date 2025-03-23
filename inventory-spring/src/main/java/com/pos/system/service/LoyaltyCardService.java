@@ -1,6 +1,6 @@
 package com.pos.system.service;
 
-import com.pos.system.dto.LoyaltyCardDto;
+import com.pos.system.dto.requestDto.LoyaltyCardDto;
 import java.sql.SQLException;
 
 public interface LoyaltyCardService {

@@ -1,4 +1,4 @@
-package com.pos.system.dto;
+package com.pos.system.dto.requestDto;
 
 import lombok.*;
 
@@ -8,7 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @Data
 public class UserDto {
-    private String id;
     private String email;
     private String password;
 }

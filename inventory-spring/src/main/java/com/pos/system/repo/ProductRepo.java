@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @EnableJpaRepositories
 public interface ProductRepo extends JpaRepository<Product, String> {
-    @Query(nativeQuery = true, value = "SELECT * FROM Product p WHERE code=?")
+    @Query(nativeQuery = true, value = "SELECT * FROM Product p WHERE product_code=?")
     Optional<Product> getLastProductId(String code);
 
     Optional<Product> findByCode(String productCode);
