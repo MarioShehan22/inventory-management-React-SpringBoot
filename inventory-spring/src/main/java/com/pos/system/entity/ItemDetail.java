@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 @Builder
 public class ItemDetail {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String itemDetailId;
 
     private int qty;

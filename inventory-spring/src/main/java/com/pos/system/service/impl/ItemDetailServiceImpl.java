@@ -25,6 +25,7 @@ import java.util.UUID;
 public class ItemDetailServiceImpl implements ItemDetailService {
     private final ItemDetailRepo itemDetailRepo;
     private final ProductRepo productRepo;
+
     @Override
     public void createItemDetail(ItemDetailDto dto) {
         UUID uuid = UUID.randomUUID();

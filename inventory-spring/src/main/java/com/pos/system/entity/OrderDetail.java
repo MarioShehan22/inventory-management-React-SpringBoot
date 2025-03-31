@@ -18,7 +18,7 @@ public class OrderDetail{
     private double discount;
     private String operatorEmail;
 
-    @OneToMany(mappedBy = "orderDetail", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "orderDetail",  cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     private List<ItemDetail> itemDetails;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -31,6 +31,11 @@ public class OrderDetail{
 
     @Column(updatable = false)
     private LocalDateTime issuedDate;
+
+    public void addItemDetails(ItemDetail itemDetail) {
+        itemDetails.add(itemDetail);
+        itemDetail.setOrderDetail(this);
+    }
 
     @PrePersist
     protected void onCreate() {

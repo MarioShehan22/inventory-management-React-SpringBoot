@@ -17,6 +17,7 @@ import java.util.List;
 public class Product{
     @Id
     @Column(name = "product_code")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String code;
 
     private String name;

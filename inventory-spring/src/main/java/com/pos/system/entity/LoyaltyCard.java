@@ -1,10 +1,7 @@
 package com.pos.system.entity;
 
 import com.pos.system.enums.CardType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +14,7 @@ import lombok.Setter;
 @Setter
 public class LoyaltyCard {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int code;
     private CardType cardType;
     private String barcode;

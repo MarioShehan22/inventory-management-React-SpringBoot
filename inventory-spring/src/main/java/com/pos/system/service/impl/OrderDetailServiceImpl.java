@@ -45,7 +45,6 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
         UUID uuid = UUID.randomUUID();
         long orderId = uuid.getMostSignificantBits();
-        LOGGER.trace(String.valueOf(orderId));
 
         OrderDetail orderDetail = OrderDetail.builder()
                 .orderId(String.valueOf(orderId))
@@ -55,8 +54,6 @@ public class OrderDetailServiceImpl implements OrderDetailService {
                 .user(user)
                 .customer(customer)
                 .build();
-
-        orderDetailRepo.save(orderDetail);
 
         if(orderDetailRepo.existsById(String.valueOf(orderId))){
             dto.getOrderItems().forEach(itemDto -> {
@@ -72,9 +69,12 @@ public class OrderDetailServiceImpl implements OrderDetailService {
                         .product(product)
                         .orderDetail(orderDetail)
                         .build();
-                itemDetailRepo.save(item);
+
+                orderDetail.addItemDetails(item);
+                //itemDetailRepo.save(item);
             });
         }
+        orderDetailRepo.save(orderDetail);
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("nilankashehan679@gmail.com"); // Replace with your email

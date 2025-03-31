@@ -33,6 +33,7 @@ public class LoyaltyCardController {
                 HttpStatus.CREATED
         );
     }
+
     // @PutMapping(path = "/{customerId}")
     // public ResponseEntity<StandardResponse> updateLoyaltyCard(@RequestBody CustomerDto dto, @PathVariable String customerId) throws SQLException, ClassNotFoundException {
     //     loyaltyCardService.updateCustomer(dto, customerId);
