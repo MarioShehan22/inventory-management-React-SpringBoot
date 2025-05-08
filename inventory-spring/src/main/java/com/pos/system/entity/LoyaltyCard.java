@@ -2,17 +2,17 @@ package com.pos.system.entity;
 
 import com.pos.system.enums.CardType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class LoyaltyCard {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int code;

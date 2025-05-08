@@ -6,9 +6,9 @@ import java.util.List;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
 public class OrderDetailDto {
     private String orderId;

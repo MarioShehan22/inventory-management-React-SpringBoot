@@ -1,12 +1,10 @@
 package com.pos.system.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,42 +12,36 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Product{
     @Id
-    @Column(name = "product_code")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String code;
+    @GeneratedValue(strategy = GenerationType.AUTO) // Auto-increment primary key
+    @Column(name = "product_id")
+    private int productId;
 
     private String name;
 
     private String description;
 
-    private int qtyOnHand  = 0;
+    private String brand;
 
-    private int sellingPrice;
+    @OneToMany(mappedBy = "product",fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JsonManagedReference
+    private List<Batch> batch;
 
-    private int showPrice;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
-    private int buyingPrice;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "product_supplier",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "supplier_id")
+    )
+    private List<Supplier> supplier = new ArrayList<>();
 
-    private boolean discountAvailability;
-
-    @OneToMany(mappedBy = "product")
-    private List<ItemDetail> itemDetails;
-
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
+//    public void addProduct(Batch b){
+//        batch.add(b);
+//    }
 }

@@ -31,14 +31,14 @@ public class ItemDetailServiceImpl implements ItemDetailService {
         UUID uuid = UUID.randomUUID();
         long itemId = uuid.getMostSignificantBits();
 
-        Product product = productRepo.findByCode(dto.getCode())
+        Product product = productRepo.findByProductId(Long.valueOf(dto.getCode()))
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Product not found: " + dto.getCode()));
 
         ItemDetail itemDetail = new ItemDetail();
         itemDetail.setItemDetailId(String.valueOf((int) itemId));
         itemDetail.setOrderDetail(dto.getOrderDetail());
-        itemDetail.setProduct(product);
+//        itemDetail.setProduct(product);
         itemDetail.setQty(dto.getQty());
         itemDetail.setUnitPrice(dto.getUnitPrice());
         itemDetailRepo.save(itemDetail);
@@ -59,31 +59,31 @@ public class ItemDetailServiceImpl implements ItemDetailService {
         return null;
     }
 
-    @Override
-    public List<TotalAmountPerProduct> findAllTotalAmountPerProducts() throws SQLException, ClassNotFoundException {
-        List<TotalAmountPerProduct> dtos=  new ArrayList<>();
-        itemDetailRepo.findTotalAmountPerProduct().forEach(e->{
-            dtos.add(
-                    new TotalAmountPerProduct(
-                            (String) e[0],
-                            (BigDecimal) e[1]
-                    )
-            );
-        });
-        return dtos;
-    }
+//    @Override
+//    public List<TotalAmountPerProduct> findAllTotalAmountPerProducts() throws SQLException, ClassNotFoundException {
+//        List<TotalAmountPerProduct> dtos=  new ArrayList<>();
+//        itemDetailRepo.findTotalAmountPerProduct().forEach(e->{
+//            dtos.add(
+//                    new TotalAmountPerProduct(
+//                            (String) e[0],
+//                            (BigDecimal) e[1]
+//                    )
+//            );
+//        });
+//        return dtos;
+//    }
 
-    @Override
-    public List<ProductQuantityDTO> findAllTotalQTYPerProducts() throws SQLException, ClassNotFoundException {
-        List<ProductQuantityDTO> dtos=  new ArrayList<>();
-        itemDetailRepo.findTotalQtyPerProduct().forEach(e->{
-            dtos.add(
-                    new ProductQuantityDTO(
-                            (String) e[0],
-                            (Long) e[1]
-                    )
-            );
-        });
-        return dtos;
-    }
+//    @Override
+//    public List<ProductQuantityDTO> findAllTotalQTYPerProducts() throws SQLException, ClassNotFoundException {
+//        List<ProductQuantityDTO> dtos=  new ArrayList<>();
+//        itemDetailRepo.findTotalQtyPerProduct().forEach(e->{
+//            dtos.add(
+//                    new ProductQuantityDTO(
+//                            (String) e[0],
+//                            (Long) e[1]
+//                    )
+//            );
+//        });
+//        return dtos;
+//    }
 }

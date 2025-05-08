@@ -4,9 +4,10 @@ import lombok.*;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Builder
 public class UserDto {
     private String email;
     private String password;

@@ -33,10 +33,12 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     private final ProductRepo productRepo;
     private final JavaMailSender mailSender;
     private final OrderMapper orderMapper;
+    private final BatchRepo batchRepo;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderDetailServiceImpl.class);
+
     @Override
     public void createOrder(OrderDetailDto dto) {
-        //Set<ProductDetail> selectedProducts = dto.getProductDetail();
         User user = userRepo.findById(dto.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
@@ -50,7 +52,6 @@ public class OrderDetailServiceImpl implements OrderDetailService {
                 .orderId(String.valueOf(orderId))
                 .totalCost(dto.getTotalCost())
                 .discount(dto.getDiscount())
-                .operatorEmail(dto.getOperatorEmail())
                 .user(user)
                 .customer(customer)
                 .build();
@@ -58,15 +59,15 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         if(orderDetailRepo.existsById(String.valueOf(orderId))){
             dto.getOrderItems().forEach(itemDto -> {
                 // Find product for each item
-                Product product = productRepo.findByCode(itemDto.getCode()).orElseThrow(() -> new ResourceNotFoundException(
-                        "Product not found: " + itemDto.getCode()));
+//                Batch batch = batchRepo.findById(Long.valueOf(itemDto.getCode())).orElseThrow(() -> new ResourceNotFoundException(
+//                        "Product not found: " + itemDto.getCode()));
 
                 // Create ItemDetail
                 ItemDetail item= ItemDetail.builder()
                         .itemDetailId(UUID.randomUUID().toString())
                         .qty(itemDto.getQty())
                         .unitPrice(itemDto.getUnitPrice())
-                        .product(product)
+//                        .product(product)
                         .orderDetail(orderDetail)
                         .build();
 
@@ -90,7 +91,6 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     public void updateOrder(OrderDetailDto dto, String id) {
         Optional<OrderDetail> selectedOrder = orderDetailRepo.findOrderById(String.valueOf(Long.parseLong(id)));
         if (selectedOrder.isEmpty()) throw new RuntimeException();
-        selectedOrder.get().setOperatorEmail(dto.getOperatorEmail());
         selectedOrder.get().setTotalCost(dto.getTotalCost());
     }
 

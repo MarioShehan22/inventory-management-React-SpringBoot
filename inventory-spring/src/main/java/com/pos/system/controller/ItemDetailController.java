@@ -29,18 +29,19 @@ public class ItemDetailController {
                 HttpStatus.CREATED
         );
     }
-    @GetMapping(path = "/findAllTotalAmountPerProducts/list")
-    public ResponseEntity<StandardResponse> findAllTotalAmountPerProducts() throws SQLException, ClassNotFoundException {
-        return new ResponseEntity<>(
-                new StandardResponse(200, "Data List!", itemDetailService.findAllTotalAmountPerProducts()),
-                HttpStatus.OK
-        );
-    }@GetMapping(path = "/findAllTotalQtyPerProducts/list")
-    public ResponseEntity<StandardResponse> findAllTotalQtyPerProducts() throws SQLException, ClassNotFoundException {
-        return new ResponseEntity<>(
-                new StandardResponse(200, "Data List!", itemDetailService.findAllTotalQTYPerProducts()),
-                HttpStatus.OK
-        );
-    }
+//    @GetMapping(path = "/findAllTotalAmountPerProducts/list")
+//    public ResponseEntity<StandardResponse> findAllTotalAmountPerProducts() throws SQLException, ClassNotFoundException {
+//        return new ResponseEntity<>(
+//                new StandardResponse(200, "Data List!", itemDetailService.findAllTotalAmountPerProducts()),
+//                HttpStatus.OK
+//        );
+//    }
+//    @GetMapping(path = "/findAllTotalQtyPerProducts/list")
+//    public ResponseEntity<StandardResponse> findAllTotalQtyPerProducts() throws SQLException, ClassNotFoundException {
+//        return new ResponseEntity<>(
+//                new StandardResponse(200, "Data List!", itemDetailService.findAllTotalQTYPerProducts()),
+//                HttpStatus.OK
+//        );
+//    }
 
 }

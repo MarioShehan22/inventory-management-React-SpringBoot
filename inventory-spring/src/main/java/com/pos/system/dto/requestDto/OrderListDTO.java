@@ -1,12 +1,13 @@
 package com.pos.system.dto.requestDto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Builder
 public class OrderListDTO {
     private String customerName;
     private String customerEmail;

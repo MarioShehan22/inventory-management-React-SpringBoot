@@ -1,7 +1,11 @@
 package com.pos.system.service.impl;
 
 import com.pos.system.dto.requestDto.ProductDto;
+import com.pos.system.dto.responsedto.ProductResponseDTO;
+import com.pos.system.entity.Category;
 import com.pos.system.entity.Product;
+import com.pos.system.exception.ResourceNotFoundException;
+import com.pos.system.repo.CategoryRepo;
 import com.pos.system.repo.ProductRepo;
 import com.pos.system.service.ProductService;
 import com.pos.system.util.mapper.ProductMapper;
@@ -10,8 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -19,48 +21,44 @@ import java.util.UUID;
 public class ProductServiceImpl implements ProductService {
    private final ProductRepo productRepo;
 
-   private final ProductMapper productMapper;
+    private final ProductMapper productMapper;
+    private final CategoryRepo categoryRepo;
     @Override
-    public void saveProduct(ProductDto dto){
-        Product product = new Product();
-        UUID uuid = UUID.randomUUID();
-        long id = uuid.getMostSignificantBits();
+    public void saveProduct(ProductDto dto) {
+        Category category = categoryRepo.findById(dto.getCategory())
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
-        product.setCode(String.valueOf(id));
-        product.setName(dto.getName());
-        product.setBuyingPrice(dto.getBuyingPrice());
-        product.setSellingPrice(dto.getSellingPrice());
-        product.setShowPrice(dto.getShowPrice());
-        product.setQtyOnHand(dto.getQtyOnHand());
-        product.setDiscountAvailability(dto.isDiscountAvailability());
-        product.setDescription(dto.getDescription());
+        Product product = Product.builder()
+                .name(dto.getName())
+                .description(dto.getDescription())
+                .brand(dto.getBrand())
+                .category(category)
+                .build();
         productRepo.save(product);
     }
 
     @Override
-    public void updateProduct(ProductDto dto, String id) {
-        Optional<Product> selectedProduct = productRepo.getLastProductId(String.valueOf(Long.parseLong(id)));
-        if (selectedProduct.isEmpty()) throw new RuntimeException();
-        selectedProduct.get().setCode(String.valueOf(Integer.parseInt(id)));
-        selectedProduct.get().setName(dto.getName());
-        selectedProduct.get().setDescription(dto.getDescription());
-        selectedProduct.get().setDiscountAvailability(dto.isDiscountAvailability());
-        selectedProduct.get().setQtyOnHand(dto.getQtyOnHand());
-        selectedProduct.get().setSellingPrice(dto.getSellingPrice());
-        selectedProduct.get().setShowPrice(dto.getShowPrice());
-        selectedProduct.get().setBuyingPrice(dto.getBuyingPrice());
-        productRepo.save(selectedProduct.get());
+    public void updateProduct(ProductDto dto, int id) {
+        Product product = productRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+        Category category = categoryRepo.findById(dto.getCategory())
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+        product.setName(dto.getName());
+        product.setDescription(dto.getDescription());
+        product.setBrand(dto.getBrand());
+        product.setCategory(category);
+        productRepo.save(product);
     }
 
     @Override
-    public void deleteProduct(long id) {
-        Optional<Product> selectedProduct = productRepo.getLastProductId(String.valueOf(id));
-        if (selectedProduct.isEmpty()) throw new RuntimeException();
-        productRepo.delete(selectedProduct.get());
+    public void deleteProduct(int id) {
+        Product product = productRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+        productRepo.deleteById(id);
     }
 
     @Override
-    public List<ProductDto> findAllProducts(){
+    public List<ProductResponseDTO> findAllProducts(){
         List<Product> dtos = productRepo.findAll();
         return productMapper.toResponseProductDto(dtos);
     }

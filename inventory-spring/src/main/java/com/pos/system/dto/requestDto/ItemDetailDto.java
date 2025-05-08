@@ -7,9 +7,10 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Builder
 public class ItemDetailDto {
     private String itemDetailId;
     private int order;

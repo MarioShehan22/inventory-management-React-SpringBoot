@@ -13,6 +13,6 @@ public interface ItemDetailService {
     void deleteItemDetail(long id) throws SQLException, ClassNotFoundException;
     //List<OrderDto> findCustomer(String email) throws SQLException, ClassNotFoundException;
     List<ItemDetailDto> findAllOrders() throws SQLException, ClassNotFoundException;
-    List<TotalAmountPerProduct> findAllTotalAmountPerProducts() throws SQLException,ClassNotFoundException;
-    List<ProductQuantityDTO> findAllTotalQTYPerProducts() throws SQLException,ClassNotFoundException;
+    //List<TotalAmountPerProduct> findAllTotalAmountPerProducts() throws SQLException,ClassNotFoundException;
+    //List<ProductQuantityDTO> findAllTotalQTYPerProducts() throws SQLException,ClassNotFoundException;
 }

@@ -27,6 +27,7 @@ public class LoyaltyCardServiceImpl implements LoyaltyCardService {
         long id = uuid.getMostSignificantBits();
 
         LoyaltyCard loyaltyCard = new LoyaltyCard();
+
         loyaltyCard.setCode((int) id);
         loyaltyCard.setCardType(dto.getCardType());
         loyaltyCard.setBarcode(dto.getBarcode());

@@ -22,14 +22,14 @@ public class ItemDetail {
     private double discount;
 
     @ManyToOne
-    @JoinColumn(name = "orderId", nullable = false)
+    @JoinColumn(name = "batch_id", nullable = false)
     @Valid
-    private OrderDetail orderDetail;
+    private Batch batch;
 
     @ManyToOne
-    @JoinColumn(name = "productId", nullable = false)
+    @JoinColumn(name = "order_id", nullable = false)
     @Valid
-    private Product product;
+    private OrderDetail orderDetail;
 
     @Column(nullable = false)
     private BigDecimal amount;

@@ -35,15 +35,15 @@ public class ProductController {
         );
     }
     @PutMapping(path = "/{id}")
-    public ResponseEntity<StandardResponse> updateProduct(@RequestBody ProductDto dto, @PathVariable String id) throws SQLException, ClassNotFoundException {
+    public ResponseEntity<StandardResponse> updateProduct(@RequestBody ProductDto dto, @PathVariable int id) throws SQLException, ClassNotFoundException {
         productService.updateProduct(dto, id);
         return new ResponseEntity<>(
-                new StandardResponse( 201,"Product was updated!",dto.getCode()),
+                new StandardResponse( 201,"Product was updated!",dto.getProductId()),
                 HttpStatus.CREATED
         );
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<StandardResponse> deleteProduct(@PathVariable long id) throws SQLException, ClassNotFoundException {
+    public ResponseEntity<StandardResponse> deleteProduct(@PathVariable int id) throws SQLException, ClassNotFoundException {
         productService.deleteProduct(id);
         return new ResponseEntity<>(
                 new StandardResponse( 204 ," was Deleted!",id),

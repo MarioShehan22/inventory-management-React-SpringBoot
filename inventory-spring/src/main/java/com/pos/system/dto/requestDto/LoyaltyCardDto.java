@@ -5,9 +5,10 @@ import lombok.*;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Builder
 public class LoyaltyCardDto {
     private int code;
     private CardType cardType;

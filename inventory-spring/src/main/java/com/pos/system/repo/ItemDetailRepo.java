@@ -20,11 +20,11 @@ public interface ItemDetailRepo extends JpaRepository<ItemDetail, Long> {
     void deleteByOrderDetailOrderId(String orderId);
     //void deleteByOrderDetailOrderId(String orderId);
 
-    @Query("SELECT p.name, SUM(id.amount) FROM ItemDetail id INNER JOIN Product p ON id.product = p GROUP BY p.name")
-    List<Object[]> findTotalAmountPerProduct();
+//    @Query("SELECT p.name, SUM(id.amount) FROM ItemDetail id INNER JOIN Product p ON id.product = p GROUP BY p.name")
+//    List<Object[]> findTotalAmountPerProduct();
 
-    @Query(value = "SELECT p.name, SUM(id.qty) FROM ItemDetail id INNER JOIN id.product p GROUP BY p.name")
-    List<Object[]> findTotalQtyPerProduct();
+//    @Query(value = "SELECT p.name, SUM(id.qty) FROM ItemDetail id INNER JOIN id.product p GROUP BY p.name")
+//    List<Object[]> findTotalQtyPerProduct();
 }
 //SELECT product_id, COUNT(qty) FROM item_detail GROUP BY product_id;
 //SELECT product_id, SUM(qty) FROM item_detail GROUP BY product_id;

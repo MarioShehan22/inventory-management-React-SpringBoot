@@ -8,7 +8,7 @@ import lombok.*;
 @Setter
 @Builder
 public class ResponseCustomerDto {
-    private String id;
+    private int id;
     private String email;
     private String name;
     private String contact;

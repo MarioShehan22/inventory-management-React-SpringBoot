@@ -6,7 +6,6 @@ import com.pos.system.util.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -32,7 +31,7 @@ public class CustomerController {
         );
     }
     @PutMapping(path = "/{customerId}")
-    public ResponseEntity<StandardResponse> updateCustomer(@RequestBody CustomerDto dto, @PathVariable String customerId) throws SQLException, ClassNotFoundException {
+    public ResponseEntity<StandardResponse> updateCustomer(@RequestBody CustomerDto dto, @PathVariable int customerId) throws SQLException, ClassNotFoundException {
         customerService.updateCustomer(dto, customerId);
         return new ResponseEntity<>(
                 new StandardResponse( 201,"customer was updated!",dto.getName()),
@@ -52,6 +51,13 @@ public class CustomerController {
         return new ResponseEntity<>(
                 new StandardResponse( 204 ," was Deleted!",id),
                 HttpStatus.NO_CONTENT
+        );
+    }
+    @GetMapping(path = "/")
+    public ResponseEntity<StandardResponse> findAllCustomers() throws SQLException, ClassNotFoundException {
+        return new ResponseEntity<>(
+                new StandardResponse(200, "Data List!", customerService.findCustomer()),
+                HttpStatus.OK
         );
     }
 }

@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,8 +36,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void updateCustomer(CustomerDto dto, String customerId){
-        Optional<Customer> selectedCustomer = customerRepo.findUserByCustomerId(customerId);
+    public void updateCustomer(CustomerDto dto, int customerId){
+        Optional<Customer> selectedCustomer = customerRepo.findUserByCustomerId(String.valueOf(customerId));
         if (selectedCustomer.isEmpty()) throw new RuntimeException();
         selectedCustomer.get().setEmail(dto.getEmail());
         selectedCustomer.get().setName(dto.getName());
@@ -54,12 +55,17 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public List<ResponseCustomerDto> findCustomer() throws SQLException, ClassNotFoundException {
+        List<Customer> selectedCustomer = customerRepo.findAll();
+        return customerMapper.responseCustomerDto(selectedCustomer);
+    }
+
+    @Override
     public PaginatedCustomerDto findAllCustomers(String searchText, int page, int size) {
         searchText = "%" + searchText + "%";
         List<Customer> allCustomers = customerRepo.searchCustomers(searchText, PageRequest.of(page, size));
         long customerCount = customerRepo.countCustomers(searchText);
-        List<ResponseCustomerDto> dtos = customerMapper.toResponseCustomerDtoList(allCustomers);
-
+        List<ResponseCustomerDto> dtos = customerMapper.responseCustomerDto(allCustomers);
         return new PaginatedCustomerDto(
                 customerCount,
                 dtos
