@@ -16,7 +16,7 @@ public class Discount {
 
     private int discount;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne()
     @JoinColumn(name = "batch")
     private Batch batch;
 }
