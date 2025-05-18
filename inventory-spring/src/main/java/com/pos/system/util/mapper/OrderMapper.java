@@ -1,7 +1,9 @@
 package com.pos.system.util.mapper;
 
+import com.pos.system.dto.requestDto.ItemDetailDto;
 import com.pos.system.dto.responsedto.OrderDetailInterface;
 import com.pos.system.dto.responsedto.ResponseOrderDto;
+import com.pos.system.entity.ItemDetail;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -19,4 +21,5 @@ public interface OrderMapper {
     ResponseOrderDto map(OrderDetailInterface orderDetailInterface);
 
     List<ResponseOrderDto> toResponseOrderDto(List<OrderDetailInterface> list);
+    List<ItemDetail> toOrderEntity(List<ItemDetailDto> list);
 }

@@ -3,7 +3,6 @@ package com.pos.system.dto.requestDto;
 import lombok.*;
 
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
@@ -17,5 +16,6 @@ public class BatchDto {
     private int showPrice;
     private int buyingPrice;
     private Date expDate;
-    private List<ItemDetailDto> itemDetails;
+    private int productId;
+    //private List<ItemDetailDto> itemDetails;
 }

@@ -15,6 +15,7 @@ import java.util.List;
 public class Supplier {
     @Id
     @Column(name = "supplier_id")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String supplierId;
 
     private String name;

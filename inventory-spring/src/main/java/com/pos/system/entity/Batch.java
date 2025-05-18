@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +18,8 @@ import java.util.List;
 public class Batch {
     @Id
     @Column(name = "batch_id")
-    private String propertyId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String batchId;
 
     private int qtyOnHand  = 0;
 
@@ -35,16 +37,16 @@ public class Batch {
 
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "batch",fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<ItemDetail> itemDetails;
+    @OneToMany(mappedBy = "batch",fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<ItemDetail> itemDetails = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "product_id")
     @JsonBackReference
     private Product product;
 
-    @OneToMany(mappedBy = "batch",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Discount> discounts;
+    @OneToMany(mappedBy = "batch", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Discount> discounts = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {

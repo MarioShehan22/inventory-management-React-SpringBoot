@@ -38,60 +38,62 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderDetailServiceImpl.class);
 
     @Override
-    public void createOrder(OrderDetailDto dto) {
-        User user = userRepo.findById(dto.getUserId())
+    public String createOrder(OrderDetailDto dto) {
+        User user = userRepo.findById(dto.getOperatorEmail())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        Customer customer = customerRepo.findById(dto.getCustomer())
+        Customer customer = customerRepo.findById(String.valueOf(dto.getCustomer()))
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
 
-        UUID uuid = UUID.randomUUID();
-        long orderId = uuid.getMostSignificantBits();
+//        UUID uuid = UUID.randomUUID();
+//        long orderId = uuid.getMostSignificantBits();
+        //String user = "3e20633a-681c-4490-b51c-a0a45c7bb07y";
 
         OrderDetail orderDetail = OrderDetail.builder()
-                .orderId(String.valueOf(orderId))
-                .totalCost(dto.getTotalCost())
                 .discount(dto.getDiscount())
+                .itemDetails(orderMapper.toOrderEntity(dto.getOrderItems()))
                 .user(user)
                 .customer(customer)
                 .build();
 
-        if(orderDetailRepo.existsById(String.valueOf(orderId))){
-            dto.getOrderItems().forEach(itemDto -> {
-                // Find product for each item
-//                Batch batch = batchRepo.findById(Long.valueOf(itemDto.getCode())).orElseThrow(() -> new ResourceNotFoundException(
-//                        "Product not found: " + itemDto.getCode()));
-
-                // Create ItemDetail
-                ItemDetail item= ItemDetail.builder()
-                        .itemDetailId(UUID.randomUUID().toString())
-                        .qty(itemDto.getQty())
-                        .unitPrice(itemDto.getUnitPrice())
-//                        .product(product)
-                        .orderDetail(orderDetail)
-                        .build();
-
-                orderDetail.addItemDetails(item);
-                //itemDetailRepo.save(item);
-            });
-        }
+        //if(orderDetailRepo.existsById(orderDetail.getOrderId())){
+//        if(orderDetail!=null){
+//            dto.getOrderItems().forEach(itemDto -> {
+//                // Find product for each item
+////                Batch batch = batchRepo.findById(Long.valueOf(itemDto.getCode())).orElseThrow(() -> new ResourceNotFoundException(
+////                        "Product not found: " + itemDto.getCode()));
+//
+//                // Create ItemDetail
+//                ItemDetail item= ItemDetail.builder()
+//                        .itemDetailId(UUID.randomUUID().toString())
+//                        .qty(itemDto.getQty())
+//                        .unitPrice(itemDto.getUnitPrice())
+////                        .product(product)
+//                        .orderDetail(orderDetail)
+//                        .build();
+//
+//                orderDetail.addItemDetails(item);
+//                //itemDetailRepo.save(item);
+//            });
+//        }
         orderDetailRepo.save(orderDetail);
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("nilankashehan679@gmail.com"); // Replace with your email
         message.setTo(customer.getEmail());
-        message.setSubject("Order ID :"+orderId);
+        message.setSubject("Order ID :"+orderDetail.getOrderId());
         message.setText(String.valueOf(dto));
 
         mailSender.send(message);
         System.out.println("Email sent successfully!");
+        return orderDetail.getOrderId();
     }
 
     @Override
     public void updateOrder(OrderDetailDto dto, String id) {
         Optional<OrderDetail> selectedOrder = orderDetailRepo.findOrderById(String.valueOf(Long.parseLong(id)));
         if (selectedOrder.isEmpty()) throw new RuntimeException();
-        selectedOrder.get().setTotalCost(dto.getTotalCost());
+       // selectedOrder.get().setTotalCost(dto.getTotalCost());
     }
 
     @Override

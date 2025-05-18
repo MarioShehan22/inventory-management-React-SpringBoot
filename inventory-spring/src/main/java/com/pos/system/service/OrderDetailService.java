@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.Set;
 
 public interface OrderDetailService {
-    void createOrder(OrderDetailDto dto) throws SQLException, ClassNotFoundException;
+    String createOrder(OrderDetailDto dto) throws SQLException, ClassNotFoundException;
     void updateOrder(OrderDetailDto dto, String customerId) throws SQLException, ClassNotFoundException;
     void deleteOrder(String id) throws SQLException, ClassNotFoundException;
     //List<OrderDto> findCustomer(String email) throws SQLException, ClassNotFoundException;

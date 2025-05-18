@@ -19,9 +19,9 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<StandardResponse> createOrder(@RequestBody OrderDetailDto orderDetailDto) throws SQLException, ClassNotFoundException {
-        orderDetailService.createOrder(orderDetailDto);
+        String id = orderDetailService.createOrder(orderDetailDto);
         return new ResponseEntity<>(
-                new StandardResponse(201, "Order was saved!", orderDetailDto.getOrderId()),
+                new StandardResponse(201, "Order was saved!", id),
                 HttpStatus.CREATED
         );
     }

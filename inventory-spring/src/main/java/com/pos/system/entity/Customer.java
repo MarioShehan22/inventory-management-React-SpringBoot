@@ -39,8 +39,8 @@ public class Customer{
     @Nullable
     private LoyaltyCard loyaltyCard;
 
-    @OneToMany(mappedBy = "customer")
-    private List<OrderDetail> orderDetail ;
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+    private List<OrderDetail> orderDetail = new ArrayList<>();
 
     @Column(updatable = false)
     private LocalDateTime createdAt;

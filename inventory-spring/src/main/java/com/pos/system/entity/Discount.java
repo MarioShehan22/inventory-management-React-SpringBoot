@@ -12,11 +12,12 @@ import lombok.*;
 public class Discount {
     @Id
     @Column(name = "discount_id")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String discountId;
 
     private int discount;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "batch")
     private Batch batch;
 }

@@ -37,7 +37,7 @@ public class ItemDetailServiceImpl implements ItemDetailService {
 
         ItemDetail itemDetail = new ItemDetail();
         itemDetail.setItemDetailId(String.valueOf((int) itemId));
-        itemDetail.setOrderDetail(dto.getOrderDetail());
+//        itemDetail.setOrderDetail(dto.getOrderDetail());
 //        itemDetail.setProduct(product);
         itemDetail.setQty(dto.getQty());
         itemDetail.setUnitPrice(dto.getUnitPrice());

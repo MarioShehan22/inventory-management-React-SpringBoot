@@ -15,12 +15,13 @@ import java.time.LocalDateTime;
 public class Payment {
     @Id
     @Column(name = "payment_id")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String paymentId;
 
     private int amount;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id",nullable = false)
+    @JoinColumn(name = "order_id")
     private OrderDetail orderDetail;
 
     private PaymentType paymentType;

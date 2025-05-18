@@ -14,15 +14,12 @@ import java.util.List;
 public class Category {
     @Id
     @Column(name = "category_id")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String propertyId;
 
     @Column(name = "category_name")
     private String categoryName;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER ,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Product> products;
-
-    public Category(String id) {
-        this.propertyId = id;
-    }
 }

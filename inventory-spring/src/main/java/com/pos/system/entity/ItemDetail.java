@@ -14,19 +14,19 @@ import java.math.BigDecimal;
 @Builder
 public class ItemDetail {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String itemDetailId;
 
     private int qty;
 
     private double discount;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "batch_id", nullable = false)
     @Valid
     private Batch batch;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
     @Valid
     private OrderDetail orderDetail;

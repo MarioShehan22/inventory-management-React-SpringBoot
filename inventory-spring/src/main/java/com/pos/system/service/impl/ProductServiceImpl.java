@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
    private final ProductRepo productRepo;
@@ -24,6 +23,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductMapper productMapper;
     private final CategoryRepo categoryRepo;
     @Override
+    @Transactional
     public void saveProduct(ProductDto dto) {
         Category category = categoryRepo.findById(dto.getCategory())
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
@@ -52,9 +52,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(int id) {
-        Product product = productRepo.findById(id)
+        productRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
         productRepo.deleteById(id);
+    }
+
+    @Override
+    public ProductDto findBatchByProduct(String code) {
+        return null;
     }
 
     @Override

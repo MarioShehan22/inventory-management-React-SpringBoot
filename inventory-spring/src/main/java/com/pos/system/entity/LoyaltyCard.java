@@ -20,7 +20,7 @@ public class LoyaltyCard {
     private String barcode;
     private String email;
 
-    @OneToOne
-    @JoinColumn(name = "customer_id", unique = true)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", unique = true, nullable = false)
     private Customer customer;
 }

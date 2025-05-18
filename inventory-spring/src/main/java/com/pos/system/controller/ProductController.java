@@ -3,6 +3,7 @@ import com.pos.system.dto.requestDto.ProductDto;
 import com.pos.system.service.ProductService;
 import com.pos.system.util.StandardResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,13 +12,9 @@ import java.sql.SQLException;
 
 @RestController
 @RequestMapping("/api/v1/products")
+@RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
-
-    @Autowired
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
 
     @PostMapping
     public ResponseEntity<StandardResponse> createProduct(@RequestBody ProductDto productDto) throws SQLException, ClassNotFoundException {
@@ -38,7 +35,7 @@ public class ProductController {
     public ResponseEntity<StandardResponse> updateProduct(@RequestBody ProductDto dto, @PathVariable int id) throws SQLException, ClassNotFoundException {
         productService.updateProduct(dto, id);
         return new ResponseEntity<>(
-                new StandardResponse( 201,"Product was updated!",dto.getProductId()),
+                new StandardResponse( 201,"Product was updated!",id),
                 HttpStatus.CREATED
         );
     }
