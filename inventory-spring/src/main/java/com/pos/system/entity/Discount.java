@@ -16,7 +16,7 @@ public class Discount {
 
     private int discount;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "batch")
     private Batch batch;
 }
