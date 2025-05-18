@@ -19,7 +19,7 @@ public class Payment {
 
     private int amount;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private OrderDetail orderDetail;
 
