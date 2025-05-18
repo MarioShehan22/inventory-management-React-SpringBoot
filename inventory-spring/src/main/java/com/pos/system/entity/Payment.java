@@ -20,7 +20,7 @@ public class Payment {
     private int amount;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_id",nullable = false)
     private OrderDetail orderDetail;
 
     private PaymentType paymentType;
